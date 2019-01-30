@@ -129,34 +129,46 @@ def game_hash
 }
 end
 
-
-def num_points_scored(name)
-  points_scored = []
-
+def num_to_name(number)
   game_hash.each do |team, details_hash|
     players_array = details_hash[:players]
       players_array.each do |player_details_hash|
-        if player_details_hash[:name] == name
-          points_scored = player_details_hash[:points]
+        if player_details_hash[:number] == number
+          return player_details_hash[:name]
         end
       end
   end
-  points_scored
+end
+
+puts num_to_name(4)
+
+
+def num_points_scored(name)
+  player_stats(name)[:points]
+# points_scored = []
+#   game_hash.each do |team, details_hash|
+#     players_array = details_hash[:players]
+#       players_array.each do |player_details_hash|
+#         if player_details_hash[:name] == name
+#           points_scored = player_details_hash[:points]
+#         end
+#       end
+#   end
+#   points_scored
 end
 
 
 def shoe_size(name)
-  players_size = []
-
-  game_hash.each do |team, details_hash|
-    players_array = details_hash[:players]
-      players_array.each do |player_details_hash|
-        if player_details_hash[:name] == name
-          players_size = player_details_hash[:shoe]
-        end
-      end
-  end
-  players_size
+  player_stats(name)[:shoe]
+  # game_hash.each do |team, details_hash|
+  #   players_array = details_hash[:players]
+  #     players_array.each do |player_details_hash|
+  #       if player_details_hash[:name] == name
+  #         players_size = player_details_hash[:shoe]
+  #       end
+  #     end
+  # end
+  # players_size
 end
 
 
@@ -196,16 +208,15 @@ end
 
 
 def player_stats(player_name)
-  player_stats = []
+
   game_hash.each do |team, team_details_hash|
     team_details_hash[:players].each do |stats|
       if stats[:name] == player_name
         stats.delete(:name)
-        player_stats = stats
+        return stats
       end
     end
   end
-  player_stats
 end
 
 def big_shoe_rebounds
@@ -221,3 +232,5 @@ def big_shoe_rebounds
     end
   rebounds
 end
+
+# binding.pry
